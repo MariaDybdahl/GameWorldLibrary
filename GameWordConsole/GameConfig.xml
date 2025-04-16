@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GameConfig>
+	<GameSettings>
+		<World>
+			<WorldSize>
+				<MaxX>100</MaxX>
+				<MaxY>100</MaxY>
+			</WorldSize>
+			<GameLevel>Normal</GameLevel>
+		</World>
+	</GameSettings>
+</GameConfig>
