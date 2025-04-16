@@ -1,4 +1,5 @@
 ﻿// Læs automatisk fra fil (eller lav default hvis den ikke findes)
+using GameWorldLibrary;
 using GameWorldLibrary.Creatures;
 using GameWorldLibrary.DesignPattern;
 using GameWorldLibrary.Interface;
@@ -11,6 +12,12 @@ using System.Xml;
 
 
 #region Creating
+
+//
+// Sæt op hvor logbeskeder skal gå hen:
+MyLogger logger = null;
+logger = MyLogger.GetInstance();
+logger.AddListener(new TextWriterTraceListener("GameLoggerNR2.txt"));
 
 //Laver en verden:
 World world = new World();

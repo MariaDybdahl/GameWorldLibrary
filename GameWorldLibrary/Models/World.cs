@@ -38,7 +38,6 @@ namespace GameWorldLibrary.Models
 
             logger = MyLogger.GetInstance();
 
-            logger.AddListener(new TextWriterTraceListener("log.txt"));
             
             CreatureList = new List<Creature>();
             WorldObjectList = new List<WorldObject>();

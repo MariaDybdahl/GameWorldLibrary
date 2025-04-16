@@ -54,7 +54,7 @@ namespace GameWorldLibrary.DesignPattern
             HitPoint = hitPoint;
             logger = MyLogger.GetInstance();
 
-            logger.AddListener(new TextWriterTraceListener("log.txt"));
+         
         }
 
         public Creature()
@@ -62,7 +62,6 @@ namespace GameWorldLibrary.DesignPattern
 
             logger = MyLogger.GetInstance();
 
-            logger.AddListener(new TextWriterTraceListener("log.txt"));
         }
 
         #endregion
