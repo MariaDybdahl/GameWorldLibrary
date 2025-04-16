@@ -13,11 +13,9 @@ using System.Xml;
 
 #region Creating
 
-//
 // Sæt op hvor logbeskeder skal gå hen:
-MyLogger logger = null;
-logger = MyLogger.GetInstance();
-logger.AddListener(new TextWriterTraceListener("GameLoggerNR2.txt"));
+MyLogger logger = MyLogger.GetInstance();
+logger.AddListener(new TextWriterTraceListener("GameLogger.txt"));
 
 //Laver en verden:
 World world = new World();

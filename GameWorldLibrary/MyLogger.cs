@@ -10,7 +10,6 @@ namespace GameWorldLibrary
     public class MyLogger 
     {
 
-
         private static MyLogger instance = null;
         private static object _lock = new object();
        
