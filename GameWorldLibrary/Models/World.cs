@@ -2,6 +2,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using GameWorldLibrary.DesignPattern;
+using GameWorldLibrary.Logger;
 
 namespace GameWorldLibrary.Models
 {

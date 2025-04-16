@@ -1,8 +1,8 @@
 ﻿// Læs automatisk fra fil (eller lav default hvis den ikke findes)
-using GameWorldLibrary;
 using GameWorldLibrary.Creatures;
 using GameWorldLibrary.DesignPattern;
 using GameWorldLibrary.Interface;
+using GameWorldLibrary.Logger;
 using GameWorldLibrary.Models;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameWorldLibrary
+namespace GameWorldLibrary.Logger
 {
-    public class MyLogger 
+    public class MyLogger
     {
 
         private static MyLogger instance = null;
         private static object _lock = new object();
-       
+
         private readonly TraceSource? TraceManager = null;
         private readonly string logName = "GameLogger";
 
@@ -41,7 +41,7 @@ namespace GameWorldLibrary
 #if DEBUG
             TraceManager.Listeners.Add(new ConsoleTraceListener());
 #endif
-            
+
         }
 
         public void LogInfo(string message)

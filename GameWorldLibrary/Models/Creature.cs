@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using GameWorldLibrary.DesignPattern.Strategy;
 using GameWorldLibrary.Interface;
+using GameWorldLibrary.Logger;
 using GameWorldLibrary.Models;
 
 namespace GameWorldLibrary.DesignPattern
