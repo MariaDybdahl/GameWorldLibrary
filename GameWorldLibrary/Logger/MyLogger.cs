@@ -32,6 +32,14 @@ namespace GameWorldLibrary.Logger
         {
             this.logName = logName;
         }
+        private Func<string, TraceEventType, string> _formatter =
+     (msg, level) => $"{level}: {msg}";
+
+
+        public void SetFormatter(Func<string, TraceEventType, string> formatter)
+        {
+            _formatter = formatter;
+        }
 
         private MyLogger()
         {
@@ -43,32 +51,47 @@ namespace GameWorldLibrary.Logger
 #endif
 
         }
+      
+            public void LogInfo(string message)
+            {
+                
+                foreach (TraceListener listener in TraceManager.Listeners)
+                {
+                    listener.WriteLine(_formatter(message, TraceEventType.Information));    
+                    listener.Flush();
+                }
+            }
 
-        public void LogInfo(string message)
-        {
-            TraceManager.TraceEvent(TraceEventType.Information, 0, message);
-            TraceManager.Flush();
-        }
+        
 
 
         public void LogWarning(string message)
         {
-            TraceManager.TraceEvent(TraceEventType.Warning, 0, message);
-            TraceManager.Flush();
+            foreach (TraceListener listener in TraceManager.Listeners)
+            {
+                listener.WriteLine(_formatter(message, TraceEventType.Warning));
+                listener.Flush();
+            }
         }
 
 
         public void LogError(string message)
         {
-            TraceManager.TraceEvent(TraceEventType.Error, 0, message);
-            TraceManager.Flush();
+            foreach (TraceListener listener in TraceManager.Listeners)
+            {
+                listener.WriteLine(_formatter(message, TraceEventType.Error));
+                listener.Flush();
+            }
         }
 
 
         public void LogCritical(string message)
         {
-            TraceManager.TraceEvent(TraceEventType.Critical, 0, message);
-            TraceManager.Flush();
+            foreach (TraceListener listener in TraceManager.Listeners)
+            {
+                listener.WriteLine(_formatter(message, TraceEventType.Critical));
+                listener.Flush();
+            }
         }
         public void AddListener(TraceListener listener)
         {

@@ -16,6 +16,10 @@ using System.Xml;
 // Sæt op hvor logbeskeder skal gå hen:
 MyLogger logger = MyLogger.GetInstance();
 logger.AddListener(new TextWriterTraceListener("GameLogger.txt"));
+//logger.SetFormatter((msg) =>
+//    $"[{DateTime.Now:HH:mm:ss}] : {msg}");
+logger.SetFormatter((msg, level) =>
+    $" {level} {DateTime.Now:yyyy-MM-dd HH:mm:ss} [GameWorld] : {msg}");
 
 //Laver en verden:
 World world = new World();
