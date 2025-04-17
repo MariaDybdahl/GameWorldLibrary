@@ -32,8 +32,7 @@ namespace GameWorldLibrary.Logger
         {
             this.logName = logName;
         }
-        private Func<string, TraceEventType, string> _formatter =
-     (msg, level) => $"{level}: {msg}";
+        private Func<string, TraceEventType, string> _formatter = (msg, level) => $"{level}: {msg}";
 
 
         public void SetFormatter(Func<string, TraceEventType, string> formatter)
