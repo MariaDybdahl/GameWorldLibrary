@@ -91,13 +91,13 @@ namespace GameWorldLibrary.DesignPattern
         //Template Method
         public void Fight(Creature creature)
         {
-            int hit = Hit(creature.HitPoint);
+            int hit = creature.Hit();
             creature.ReceiveHit(hit);
         }
 
-        public virtual int Hit(int currentHitpoints)
+        public virtual int Hit()
         {
-            return AttackStrategy.CalculateHit(this, currentHitpoints);
+            return AttackStrategy.CalculateHit(this);
         }
         public virtual void ReceiveHit(int hit)
         {

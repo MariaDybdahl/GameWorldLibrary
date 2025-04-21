@@ -72,10 +72,10 @@ zombie.Loot(lootBox);
 #endregion
 
 #region Fight
-int zombieDMG = zombie.Hit(zombie.HitPoint);
+int zombieDMG = zombie.Hit();  
 human.ReceiveHit(zombieDMG);
 
-int humanDMG = human.Hit(human.HitPoint);
+int humanDMG = human.Hit();   
 zombie.ReceiveHit(humanDMG);
 #endregion
 

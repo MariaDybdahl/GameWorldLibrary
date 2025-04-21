@@ -8,6 +8,6 @@ namespace GameWorldLibrary.Interface
 {
     public interface IAttackItem
     {
-        int Attack(int currentHitpoints);
+        int Attack();
     }
 }

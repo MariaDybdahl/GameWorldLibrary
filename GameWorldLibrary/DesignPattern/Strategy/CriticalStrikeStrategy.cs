@@ -11,9 +11,9 @@ namespace GameWorldLibrary.DesignPattern.Strategy
     {
         private Random rand = new Random();
 
-        public int CalculateHit(Creature creature, int targetCurrentHitPoints)
+        public int CalculateHit(Creature creature)
         {
-            int baseHit = new BasicAttackStrategy().CalculateHit(creature, targetCurrentHitPoints);
+            int baseHit = new BasicAttackStrategy().CalculateHit(creature);
             bool isCrit = rand.Next(0, 100) < 25;
 
             return isCrit ? baseHit * 2 : baseHit;

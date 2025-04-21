@@ -9,14 +9,14 @@ namespace GameWorldLibrary.DesignPattern.Strategy
 {
     public class BasicAttackStrategy : IAttackStrategy
     {
-        public int CalculateHit(Creature attacker, int targetCurrentHitPoints)
+        public int CalculateHit(Creature attacker)
         {
             int totalHit = 0;
             if (attacker.AttackList != null)
             {
                 foreach (var item in attacker.AttackList)
                 {
-                    totalHit += item.Attack(targetCurrentHitPoints);
+                    totalHit += item.Attack();
                 }
             }
             return totalHit;

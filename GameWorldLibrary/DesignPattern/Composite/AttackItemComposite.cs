@@ -29,9 +29,9 @@ namespace GameWorldLibrary.DesignPattern.Composite
         /// </summary>
         /// <param name="currentHitpoints"> </param>
         /// <returns>et number af attack</returns>
-        public int Attack(int currentHitpoints)
+        public int Attack()
         {
-            return items.Count == 0 ? 0 : items.Sum(i => i.Attack(currentHitpoints));
+            return items.Count == 0 ? 0 : items.Sum(i => i.Attack());
         }
     }
 }

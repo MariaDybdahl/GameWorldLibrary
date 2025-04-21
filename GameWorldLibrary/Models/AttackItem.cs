@@ -35,7 +35,7 @@ namespace GameWorldLibrary.Models
 
         #endregion
         #region Method
-        public int Attack(int currentHitpoints)
+        public int Attack()
         {
             return Hit; 
         }
