@@ -32,7 +32,8 @@ namespace GameWorldLibrary.DesignPattern
             {
                     if (value < 1)
                     {
-                        logger.LogError("HitPoint cannot be less than 1");
+                        logger.LogError("HitPoint cannot be less than 1 – defaulting to 1");
+                    value = 1;
                   
                     }
 
@@ -48,14 +49,11 @@ namespace GameWorldLibrary.DesignPattern
             get => _name;
             set
             {
-                if (value==null)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    logger.LogError("Name cannot be null");
-                 
-                }
-                if (value.Length < 1)
-                {
-                    logger.LogError("Name cannot be less than 1");
+                    logger.LogError("Name was null, empty, or whitespace – defaulting to 'Unknown'");
+                    value = "Unknow";
+
                 }
                 if (value == _name) return;
                 _name = value;
