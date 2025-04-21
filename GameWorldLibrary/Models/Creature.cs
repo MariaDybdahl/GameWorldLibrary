@@ -30,7 +30,14 @@ namespace GameWorldLibrary.DesignPattern
             get => _hitPoint;
             set
             {
+                    if (value < 1)
+                    {
+                        logger.LogError("HitPoint cannot be less than 1");
+                  
+                    }
+
                 if (value == _hitPoint) return;
+
                 _hitPoint = value;
                 Notify("HitPoint");
             }
@@ -41,6 +48,15 @@ namespace GameWorldLibrary.DesignPattern
             get => _name;
             set
             {
+                if (value==null)
+                {
+                    logger.LogError("Name cannot be null");
+                 
+                }
+                if (value.Length < 1)
+                {
+                    logger.LogError("Name cannot be less than 1");
+                }
                 if (value == _name) return;
                 _name = value;
                 Notify("Name");

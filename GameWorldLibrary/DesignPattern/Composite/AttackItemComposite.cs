@@ -24,7 +24,11 @@ namespace GameWorldLibrary.DesignPattern.Composite
         {
             items.Remove(item);
         }
-
+        /// <summary>
+        /// Ser om den er noget i listen, hvis ikke er så sætter den attack til 0, ellers tager den sum af attack fra list, og lægger sammen
+        /// </summary>
+        /// <param name="currentHitpoints"> </param>
+        /// <returns>et number af attack</returns>
         public int Attack(int currentHitpoints)
         {
             return items.Count == 0 ? 0 : items.Sum(i => i.Attack(currentHitpoints));
