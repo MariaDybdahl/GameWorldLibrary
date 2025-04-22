@@ -88,18 +88,34 @@ namespace GameWorldLibrary.DesignPattern
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         //Template Method
-        public void Fight(Creature target)
+        /// <summary>
+        /// Udfører et angreb mod en anden creature ved at beregne skade og sende den videre.
+        /// Logger information om angrebet, herunder navn på angriber, mål og skade.
+        /// </summary>
+        /// <param name="target">Den creature, der bliver angrebet.</param>
+        public void Fight(Creature creature)
         {
             int hit = this.Hit();
-            target.ReceiveHit(hit);
-            logger.LogInfo($"{Name} attacked {target.Name} for {hit} damage.");
+            creature.ReceiveHit(hit);
+            logger.LogInfo($"{Name} attacked {creature.Name} for {hit} damage.");
         }
 
-
+        /// <summary>
+        /// Beregner og returnerer skaden ved at bruge den tilknyttede angrebsstrategi.
+        /// Kan overskrives i nedarvede klasser for at ændre angrebsadfærd.
+        /// </summary>
+        /// <returns>Et heltal, der repræsenterer den beregnede skade.</returns>
         public virtual int Hit()
         {
             return AttackStrategy.CalculateHit(this);
         }
+
+        /// <summary>
+        /// Modtager skade og reducerer HitPoint baseret på creature's samlede forsvar.
+        /// Logger mængden af skade og det resterende helbred.
+        /// Hvis creature dør, logges dette også.
+        /// </summary>
+        /// <param name="hit">Den skade der modtages før forsvar anvendes.</param>
         public virtual void ReceiveHit(int hit)
         {
             int totalDefense = CalculateTotalDefense();
@@ -116,6 +132,12 @@ namespace GameWorldLibrary.DesignPattern
 
             }
         }
+
+        /// <summary>
+        /// Udregner og returnerer den samlede forsvarsværdi fra DefenceList.
+        /// Logger forsvarsværdien, eller at ingen forsvar findes, hvis listen er tom.
+        /// </summary>
+        /// <returns>Et heltal, som repræsenterer creature's samlede forsvar.</returns>
         private int CalculateTotalDefense()
         {
             if (DefenceList == null || !DefenceList.Any())
@@ -130,10 +152,10 @@ namespace GameWorldLibrary.DesignPattern
         }
 
         /// <summary>
-        /// den tjekker om man kan loot worldObject hvis man kan tjekker den om det er Attack og Defense 
-        /// hvis der er en eller flere end en ting så vil alle ting blive tilføjet til deres list
+        /// Undersøger om et world object kan lootes, og tilføjer dets angrebs- og forsvarsgenstande til creature's lister.
+        /// Logger hvert lootet item og opdaterer status på listerne.
         /// </summary>
-        /// <param name="worldObject">Det objekt vi gerne vil loote</param>
+        /// <param name="worldObject">Det objekt, der forsøges lootet.</param>
         public virtual void Loot(WorldObject worldObject)
         {
 
@@ -152,6 +174,7 @@ namespace GameWorldLibrary.DesignPattern
                 LootDefense(worldObject);
             }
         }
+
         private void LootAttack(WorldObject worldObject)
         {
             foreach (var item in worldObject.AttackList)
@@ -170,10 +193,11 @@ namespace GameWorldLibrary.DesignPattern
             }
             logger.LogInfo($"Your Defense list has {DefenceList.Count} items");
         }
+
         /// <summary>
-        /// Tjekker om hitpoint er 0 eller under 0
+        /// Tjekker om creature er død ved at se om HitPoint er 0 eller mindre.
         /// </summary>
-        /// <returns>sandt hvis den er og falsk hvis den ikke er</returns>
+        /// <returns>True hvis HitPoint er 0 eller lavere, ellers false.</returns>
         public virtual bool IsDead()
         {
             return HitPoint <= 0;

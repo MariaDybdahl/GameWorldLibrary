@@ -35,6 +35,10 @@ namespace GameWorldLibrary.Models
 
         #endregion
         #region Method
+        /// <summary>
+        /// Returnerer den aktuelle skadeværdi (Hit) for objektet.
+        /// </summary>
+        /// <returns>Et heltal, som repræsenterer skaden.</returns>
         public int Attack()
         {
             return Hit; 
