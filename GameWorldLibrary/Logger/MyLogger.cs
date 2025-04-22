@@ -16,6 +16,11 @@ namespace GameWorldLibrary.Logger
         private readonly TraceSource? TraceManager = null;
         private readonly string logName = "GameLogger";
 
+        /// <summary>
+        /// Returnerer en instans af MyLogger-klassen. 
+        /// Bruger Singleton-mønsteret med låsning for at sikre trådsikker adgang.
+        /// </summary>
+        /// <returns>Den fælles instans af MyLogger.</returns>
         public static MyLogger GetInstance()
         {
             lock (_lock)
@@ -50,20 +55,25 @@ namespace GameWorldLibrary.Logger
 #endif
 
         }
-      
-            public void LogInfo(string message)
-            {
+
+        /// <summary>
+        /// Logger en informationsbesked til alle registrerede TraceListeners.
+        /// </summary>
+        /// <param name="message">Beskeden der skal logges som information.</param>
+        public void LogInfo(string message)
+        {
                 
-                foreach (TraceListener listener in TraceManager.Listeners)
-                {
-                    listener.WriteLine(_formatter(message, TraceEventType.Information));    
-                    listener.Flush();
-                }
+            foreach (TraceListener listener in TraceManager.Listeners)
+            {
+                listener.WriteLine(_formatter(message, TraceEventType.Information));    
+                listener.Flush();
             }
+        }
 
-        
-
-
+        /// <summary>
+        /// Logger en advarselsbesked til alle registrerede TraceListeners.
+        /// </summary>
+        /// <param name="message">Beskeden der skal logges som advarsel.</param>
         public void LogWarning(string message)
         {
             foreach (TraceListener listener in TraceManager.Listeners)
@@ -73,7 +83,10 @@ namespace GameWorldLibrary.Logger
             }
         }
 
-
+        /// <summary>
+        /// Logger en fejlbesked til alle registrerede TraceListeners.
+        /// </summary>
+        /// <param name="message">Beskeden der skal logges som fejl.</param>
         public void LogError(string message)
         {
             foreach (TraceListener listener in TraceManager.Listeners)
@@ -83,7 +96,10 @@ namespace GameWorldLibrary.Logger
             }
         }
 
-
+        /// <summary>
+        /// Logger en kritisk fejlbesked til alle registrerede TraceListeners.
+        /// </summary>
+        /// <param name="message">Beskeden der skal logges som kritisk fejl.</param>
         public void LogCritical(string message)
         {
             foreach (TraceListener listener in TraceManager.Listeners)
@@ -92,6 +108,11 @@ namespace GameWorldLibrary.Logger
                 listener.Flush();
             }
         }
+
+        /// <summary>
+        /// Tilføjer en TraceListener til loggeren, hvis den ikke er null.
+        /// </summary>
+        /// <param name="listener">Den listener der skal tilføjes.</param>
         public void AddListener(TraceListener listener)
         {
             if (listener != null)
@@ -99,6 +120,11 @@ namespace GameWorldLibrary.Logger
                 TraceManager.Listeners.Add(listener);
             }
         }
+
+        /// <summary>
+        /// Fjerner en TraceListener fra loggeren, hvis den ikke er null.
+        /// </summary>
+        /// <param name="listener">Den listener der skal fjernes.</param>
         public void RemoveListener(TraceListener listener)
         {
             if (listener != null)
