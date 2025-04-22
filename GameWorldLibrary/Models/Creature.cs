@@ -52,7 +52,7 @@ namespace GameWorldLibrary.DesignPattern
                 if (string.IsNullOrWhiteSpace(value))
                 {
                     logger.LogError("Name was null, empty, or whitespace – defaulting to 'Unknown'");
-                    value = "Unknow";
+                    value = "Unknown";
 
                 }
                 if (value == _name) return;
@@ -82,16 +82,19 @@ namespace GameWorldLibrary.DesignPattern
         #endregion
 
         #region Methods
+
         protected void Notify(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         //Template Method
-        public void Fight(Creature creature)
+        public void Fight(Creature target)
         {
-            int hit = creature.Hit();
-            creature.ReceiveHit(hit);
+            int hit = this.Hit();
+            target.ReceiveHit(hit);
+            logger.LogInfo($"{Name} attacked {target.Name} for {hit} damage.");
         }
+
 
         public virtual int Hit()
         {
@@ -116,9 +119,13 @@ namespace GameWorldLibrary.DesignPattern
         private int CalculateTotalDefense()
         {
             if (DefenceList == null || !DefenceList.Any())
+            {
+                logger.LogInfo("DefenseList is empty. No damage reduction applied.");
                 return 0;
-
-            return DefenceList.Sum(defense => defense.ReduceHitPoint);
+            }
+            int totalDefense = DefenceList.Sum(defense => defense.ReduceHitPoint);
+            logger.LogInfo($"Your defense is {totalDefense}");
+            return totalDefense;
 
         }
 
