@@ -10,30 +10,42 @@ namespace GameWorldLibrary.DesignPattern.Strategy
 {
     public class CriticalStrikeStrategy : IAttackStrategy
     {
-        private Random rand = new Random();
+        private readonly IAttackStrategy _baseStrategy;
+        private readonly Random rand = new Random();
         private readonly MyLogger logger = MyLogger.GetInstance();
-        /// <summary>
-        /// Beregner skade baseret på en grundlæggende angrebsstrategi og afgør, om angrebet er et kritisk træf.
-        /// Et kritisk træf fordobler skaden.
-        /// Logger resultatet som enten et normalt eller kritisk angreb.
-        /// </summary>
-        /// <param name="creature">Den creature, der udfører angrebet.</param>
-        /// <returns>Et heltal, som repræsenterer den samlede skade.</returns>
 
+
+        public CriticalStrikeStrategy(IAttackStrategy baseStrategy)
+        {
+            if (baseStrategy == null)
+            {
+                logger.LogCritical("CriticalStrikeStrategy constructor failed: baseStrategy is null.");
+                throw new ArgumentNullException(nameof(baseStrategy));
+            }
+
+            _baseStrategy = baseStrategy;
+        }
+
+
+        /// <summary>
+        /// Beregner skade ved først at bruge en basisstrategi og derefter afgøre om slaget er kritisk.
+        /// Et kritisk slag fordobler skaden og logger resultatet.
+        /// </summary>
+        /// <param name="creature">Creaturen der udfører angrebet.</param>
+        /// <returns>Den samlede beregnede skade, fordoblet hvis kritisk slag opstår.</returns>
         public int CalculateHit(Creature creature)
         {
-            int baseHit = new BasicAttackStrategy().CalculateHit(creature);
+            int baseHit = _baseStrategy.CalculateHit(creature);
             bool isCrit = rand.Next(0, 100) < 25;
+
             if (isCrit)
             {
-                logger.LogInfo($"Critical hit! Base hit: {baseHit}, Final hit: {baseHit * 2}");
-            }
-            else
-            {
-                logger.LogInfo($"Normal hit. Base hit: {baseHit}");
+                logger.LogInfo($"[CRITICAL] Base hit: {baseHit}, Final hit: {baseHit * 2}");
+                return baseHit * 2;
             }
 
-            return isCrit ? baseHit * 2 : baseHit;
+            logger.LogInfo($"[NORMAL] Base hit: {baseHit}");
+            return baseHit;
         }
     }
 }

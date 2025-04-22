@@ -1,6 +1,7 @@
 ﻿// Læs automatisk fra fil (eller lav default hvis den ikke findes)
 using GameWorldLibrary.Creatures;
 using GameWorldLibrary.DesignPattern;
+using GameWorldLibrary.DesignPattern.Strategy;
 using GameWorldLibrary.Interface;
 using GameWorldLibrary.Logger;
 using GameWorldLibrary.Models;
@@ -23,9 +24,11 @@ logger.SetFormatter((msg, level) =>
 
 //Laver en verden:
 World world = new World();
-//Lav to væsener
+//Lav fire væsener
 Zombie zombie = new Zombie("Zombie", 20);
 Human human = new Human("Human",10);
+Human HumanJole = new Human("Jole", 100);
+Zombie ZombieX = new Zombie("X", 200);
 //Lav to AttackItem
 AttackItem Sword = new AttackItem("Sword", 10, 30);
 AttackItem Axe = new AttackItem("Axe", 20, 20);
@@ -36,6 +39,7 @@ DefenceItem Helmet = new DefenceItem("Helmet", 6);
 WorldObject lootBox = new WorldObject("LootBox", true, false);
 WorldObject lootBox2 = new WorldObject("LootBox", true, false);
 WorldObject FalseBox = new WorldObject("FalseBox", false, false);
+
 #endregion
 
 #region AddToLootBox
@@ -79,8 +83,22 @@ int humanDMG = human.Hit();
 zombie.ReceiveHit(humanDMG);
 #endregion
 
+#region Change Logging format
+Console.WriteLine("Change Logging Format");
+Console.WriteLine();
+logger.SetFormatter((msg, level) =>
+    $"[LOG - {level}] >>> {msg} <<< @ {DateTime.Now:HH:mm}");
 
+#endregion
 
+#region Stategy On Attack
+
+ZombieX.AttackList.Add(new AttackItem("Spear", 10, 1));
+ZombieX.AttackStrategy = new CriticalStrikeStrategy(new BasicAttackStrategy());
+int damageCriticalStrikeStrategy = ZombieX.Hit();
+HumanJole.ReceiveHit(damageCriticalStrikeStrategy);
+
+#endregion
 
 #region SOLID
 //S: En klasse skal kun have ét ansvar

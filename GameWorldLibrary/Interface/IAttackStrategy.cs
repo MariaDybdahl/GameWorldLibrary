@@ -9,6 +9,6 @@ namespace GameWorldLibrary.Interface
 {
     public interface IAttackStrategy
     {
-        int CalculateHit(Creature attacker);
+        int CalculateHit(Creature creature);
     }
 }
