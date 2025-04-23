@@ -205,24 +205,5 @@ namespace GameWorldLibrary.DesignPattern
 
         #endregion
 
-
-
-        #region Delete
-
-        //public virtual int Hit(int currentHitpoints)
-        //{
-        //    int totalHit = 0;
-
-        //    if (AttackList != null && AttackList.Count > 0)
-        //    {
-        //        foreach (var attackItem in AttackList)
-        //        {
-        //            totalHit += attackItem.Attack(currentHitpoints);
-        //        }
-        //    }
-
-        //    return totalHit;
-        //}
-        #endregion
     }
 }
