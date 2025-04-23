@@ -83,10 +83,7 @@ namespace GameWorldLibrary.DesignPattern
 
         #region Methods
 
-        protected void Notify(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        #region Public Method
         //Template Method
         /// <summary>
         /// Udfører et angreb mod en anden creature ved at beregne skade og sende den videre.
@@ -132,25 +129,7 @@ namespace GameWorldLibrary.DesignPattern
 
             }
         }
-
-        /// <summary>
-        /// Udregner og returnerer den samlede forsvarsværdi fra DefenceList.
-        /// Logger forsvarsværdien, eller at ingen forsvar findes, hvis listen er tom.
-        /// </summary>
-        /// <returns>Et heltal, som repræsenterer creature's samlede forsvar.</returns>
-        private int CalculateTotalDefense()
-        {
-            if (DefenceList == null || !DefenceList.Any())
-            {
-                logger.LogInfo("DefenseList is empty. No damage reduction applied.");
-                return 0;
-            }
-            int totalDefense = DefenceList.Sum(defense => defense.ReduceHitPoint);
-            logger.LogInfo($"Your defense is {totalDefense}");
-            return totalDefense;
-
-        }
-
+       
         /// <summary>
         /// Undersøger om et world object kan lootes, og tilføjer dets angrebs- og forsvarsgenstande til creature's lister.
         /// Logger hvert lootet item og opdaterer status på listerne.
@@ -175,6 +154,24 @@ namespace GameWorldLibrary.DesignPattern
             }
         }
 
+        /// <summary>
+        /// Tjekker om creature er død ved at se om HitPoint er 0 eller mindre.
+        /// </summary>
+        /// <returns>True hvis HitPoint er 0 eller lavere, ellers false.</returns>
+        public virtual bool IsDead()
+        {
+            return HitPoint <= 0;
+        }
+        #endregion
+
+        #region Protected Method
+        protected void Notify(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region Private Method
         private void LootAttack(WorldObject worldObject)
         {
             foreach (var item in worldObject.AttackList)
@@ -184,6 +181,7 @@ namespace GameWorldLibrary.DesignPattern
             }
             logger.LogInfo($"Your attack list has {AttackList.Count} items");
         }
+
         private void LootDefense(WorldObject worldObject)
         {
             foreach (var item in worldObject.DefenseList)
@@ -194,14 +192,19 @@ namespace GameWorldLibrary.DesignPattern
             logger.LogInfo($"Your Defense list has {DefenceList.Count} items");
         }
 
-        /// <summary>
-        /// Tjekker om creature er død ved at se om HitPoint er 0 eller mindre.
-        /// </summary>
-        /// <returns>True hvis HitPoint er 0 eller lavere, ellers false.</returns>
-        public virtual bool IsDead()
+        private int CalculateTotalDefense()
         {
-            return HitPoint <= 0;
+            if (DefenceList == null || !DefenceList.Any())
+            {
+                logger.LogInfo("DefenseList is empty. No damage reduction applied.");
+                return 0;
+            }
+            int totalDefense = DefenceList.Sum(defense => defense.ReduceHitPoint);
+            logger.LogInfo($"Your defense is {totalDefense}");
+            return totalDefense;
+
         }
+        #endregion
 
         #endregion
 
