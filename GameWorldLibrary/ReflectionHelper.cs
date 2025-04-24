@@ -10,15 +10,13 @@ namespace GameWorldLibrary
     {
         public static string GetDisplayName(object obj)
         {
-            if (obj == null) return "Unknown";
+            if (obj == null)
+                return "Unknown";
 
             var nameProp = obj.GetType().GetProperty("Name");
-            if (nameProp != null)
-            {
-                var value = nameProp.GetValue(obj);
-                if (value != null)
-                    return value.ToString();
-            }
+
+            if (nameProp?.GetValue(obj) is string name)
+                return name;
 
             return obj.GetType().Name;
         }
