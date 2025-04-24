@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameWorldLibrary
 {
-    public class ReflectionHelper
+    public static class ReflectionHelper
     {
         public static string GetDisplayName(object obj)
         {
