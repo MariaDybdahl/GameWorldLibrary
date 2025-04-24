@@ -1,6 +1,8 @@
 ﻿// Læs automatisk fra fil (eller lav default hvis den ikke findes)
 using GameWorldLibrary.Creatures;
 using GameWorldLibrary.DesignPattern;
+using GameWorldLibrary.DesignPattern.Composite;
+using GameWorldLibrary.DesignPattern.Decorator;
 using GameWorldLibrary.DesignPattern.Strategy;
 using GameWorldLibrary.Interface;
 using GameWorldLibrary.Logger;
@@ -29,6 +31,13 @@ Zombie zombie = new Zombie("Zombie", 20);
 Human human = new Human("Human",10);
 Human HumanJole = new Human("Jole", 100);
 Zombie ZombieX = new Zombie("X", 200);
+#region Check om Id går op
+////Viser i console at den tæller op
+//Console.WriteLine("Human Id:" + human.Id);
+//Console.WriteLine("Zombie Id:" + zombie.Id);
+//Console.WriteLine("Human Id 2: " + HumanJole.Id);
+//Console.WriteLine("Zombie Id 2:" + ZombieX.Id);
+#endregion
 //Lav to AttackItem
 AttackItem Sword = new AttackItem("Sword", 10, 30);
 AttackItem Axe = new AttackItem("Axe", 20, 20);
@@ -58,13 +67,11 @@ zombie.Loot(lootBox);
 #region Notify
 
 //zombie.PropertyChanged += MyObserber;
-#region Method
+//#region Method
 //void MyObserber(object sender, PropertyChangedEventArgs e)
 //{
 //    Console.WriteLine("Named Method: " + e.PropertyName);
 //}
-#endregion
-
 #region Other Way
 ////lambda er anyomr som der lytter på der sker noget
 //zombie.PropertyChanged += (senderObj, args) =>
@@ -73,6 +80,7 @@ zombie.Loot(lootBox);
 //};
 
 #endregion
+
 #endregion
 
 #region Fight
@@ -81,6 +89,8 @@ human.ReceiveHit(zombieDMG);
 
 int humanDMG = human.Hit();   
 zombie.ReceiveHit(humanDMG);
+
+//zombie.PropertyChanged -= MyObserber;
 #endregion
 
 #region Change Logging format
@@ -97,6 +107,62 @@ ZombieX.AttackList.Add(new AttackItem("Spear", 10, 1));
 ZombieX.AttackStrategy = new CriticalStrikeStrategy(new BasicAttackStrategy());
 int damageCriticalStrikeStrategy = ZombieX.Hit();
 HumanJole.ReceiveHit(damageCriticalStrikeStrategy);
+
+#endregion
+
+#region Decorator
+
+#region Boost Attack Decorator
+
+
+Zombie TestBoost = new Zombie("TestBoost", 150);
+Human TestBoostHuman = new Human("HumanTest",13);
+WorldObject worldObjectTest = new WorldObject("Sand", true, true);
+
+worldObjectTest.AttackList.Add(new BoostAttackDecorator(Sword));
+
+TestBoostHuman.Loot(worldObjectTest);
+
+
+int TestBoostHumanDMG = TestBoostHuman.Hit();
+TestBoost.ReceiveHit(TestBoostHumanDMG);
+
+#endregion
+
+#region Weaken Attack Decorator
+
+Console.WriteLine();
+Console.WriteLine(Axe.Hit);
+WeakenAttackDecorator weakenAttackDecorator = new WeakenAttackDecorator(Axe);
+WorldObject worldObjectweakenAttackDecorator = new WorldObject("weakenAttackDecorator", true, true);
+
+worldObjectweakenAttackDecorator.AttackList.Add(weakenAttackDecorator);
+Human NewLooter = new Human("Nwe", 12);
+weakenAttackDecorator.SetCreature(NewLooter);
+NewLooter.Loot(worldObjectweakenAttackDecorator);
+
+
+int NewLooterDMG = NewLooter.Hit();
+TestBoost.ReceiveHit(NewLooterDMG);
+
+
+#endregion
+
+#endregion
+
+#region Composite
+
+AttackItem sword = new AttackItem("Sword", 10, 10);
+AttackItem axe = new AttackItem("Axe", 15, 15);
+
+AttackItemComposite combo = new AttackItemComposite();
+combo.Add(sword);
+combo.Add(new BoostAttackDecorator(axe));
+
+combo.PrintItems(); // viser alle items med navne og skade
+int total = combo.Attack(); // udregner samlet skade
+Console.WriteLine($"Total combo damage: {total}");
+
 
 #endregion
 

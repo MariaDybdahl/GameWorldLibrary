@@ -24,18 +24,13 @@ namespace GameWorldLibrary.DesignPattern
         public List<DefenceItem> DefenceList { get; set; } = new List<DefenceItem> { };
         public event PropertyChangedEventHandler? PropertyChanged;
         public IAttackStrategy AttackStrategy { get; set; } = new BasicAttackStrategy();
-
+        public int Id { get; private set; }
+        private static int nextId = 1;
         public int HitPoint
         {
             get => _hitPoint;
             set
             {
-                    if (value < 1)
-                    {
-                        logger.LogError("HitPoint cannot be less than 1 – defaulting to 1");
-                    value = 1;
-                  
-                    }
 
                 if (value == _hitPoint) return;
 
@@ -68,7 +63,7 @@ namespace GameWorldLibrary.DesignPattern
             Name = name;
             HitPoint = hitPoint;
             logger = MyLogger.GetInstance();
-
+            Id = nextId++;
          
         }
 
@@ -177,7 +172,7 @@ namespace GameWorldLibrary.DesignPattern
             foreach (var item in worldObject.AttackList)
             {
                 AttackList.Add(item);
-                logger.LogInfo($"You looted {item.Name}");
+                logger.LogInfo($"You looted {item.GetType().Name}");
             }
             logger.LogInfo($"Your attack list has {AttackList.Count} items");
         }

@@ -16,7 +16,7 @@ namespace GameWorldLibrary.Models
         public string Name { get; set; }
         public bool Lootable { get; set; }
         public bool Removeable { get; set; }
-        public List<AttackItem> AttackList { get; set; } = new List<AttackItem>();
+        public List<IAttackItem> AttackList { get; set; } = new List<IAttackItem>();
         public List<DefenceItem> DefenseList { get; set; } = new List<DefenceItem>();
         #endregion
 
