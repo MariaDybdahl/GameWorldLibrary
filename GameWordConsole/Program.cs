@@ -19,6 +19,8 @@ using System.Xml;
 // Sæt op hvor logbeskeder skal gå hen:
 MyLogger logger = MyLogger.GetInstance();
 logger.AddListener(new TextWriterTraceListener("GameLogger.txt"));
+logger.AddListener(new TextWriterTraceListener("Game.txt"));
+logger.AddListener(new TextWriterTraceListener("G.txt"));
 //logger.SetFormatter((msg) =>
 //    $"[{DateTime.Now:HH:mm:ss}] : {msg}");
 logger.SetFormatter((msg, level) =>
