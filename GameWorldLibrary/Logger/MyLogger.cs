@@ -37,13 +37,28 @@ namespace GameWorldLibrary.Logger
         {
             this.logName = logName;
         }
+
+        /// <summary>
+        /// En funktion (delegate), der bestemmer hvordan logbeskeder formateres, 
+        /// baseret på beskedens indhold og logniveau.
+        /// Som standard formateres beskeder som "Level: Message".
+        /// Denne formatter bruges internt i loggeren, og kan overskrives via <see cref="SetFormatter"/>.
+        /// </summary>
         private Func<string, TraceEventType, string> _formatter = (msg, level) => $"{level}: {msg}";
 
-
+        /// <summary>
+        /// Sætter en brugerdefineret formatteringsfunktion til logbeskeder.
+        /// Formatteren bestemmer hvordan logbeskeder vises, baseret på beskedens indhold og logniveau.
+        /// </summary>
+        /// <param name="formatter">
+        /// En funktion der modtager en logbesked og dens <see cref="TraceEventType"/> og returnerer en formatteret streng.
+        /// Eksempel: (msg, level) => $"[{level}] {msg}"
+        /// </param>
         public void SetFormatter(Func<string, TraceEventType, string> formatter)
         {
             _formatter = formatter;
         }
+
 
         private MyLogger()
         {
