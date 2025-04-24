@@ -65,14 +65,22 @@ namespace GameWorldLibrary.DesignPattern.Composite
         }
         public void PrintItems()
         {
-            Console.WriteLine("AttackItemComposite contains:");
+            _logger.LogInfo("AttackItemComposite contains:");
+
+            int totalDamage = 0;
+
             foreach (var item in items)
             {
-                string name = item is IAttackItem ai ? ai.ToString() : item.GetType().Name;
+                string name = ReflectionHelper.GetDisplayName(item);
                 int damage = item.Attack();
-                Console.WriteLine($"- {name}: {damage} damage");
+                totalDamage += damage;
+
+                _logger.LogInfo($"- {name}: {damage} damage");
             }
+
+            _logger.LogInfo($"Total composite damage: {totalDamage}");
         }
+
 
     }
 }

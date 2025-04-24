@@ -191,31 +191,3 @@ Console.WriteLine($"Total combo damage: {total}");
 //Du bruger interfaces, ikke afhængighed af konkrete klasser.
 
 #endregion
-
-#region Delete
-
-//XmlDocument configDoc = new XmlDocument();
-//configDoc.Load("gameconfig.xml");
-
-
-//// MaxX
-//XmlNode maxXNode = configDoc.DocumentElement.SelectSingleNode("//GameSettings/WorldSize/MaxX");
-//if (maxXNode != null)
-//{
-//    Console.WriteLine("MaxX: " + maxXNode.InnerText.Trim());
-//}
-
-//// MaxY
-//XmlNode maxYNode = configDoc.DocumentElement.SelectSingleNode("//GameSettings/WorldSize/MaxY");
-//if (maxYNode != null)
-//{
-//    Console.WriteLine("MaxY: " + maxYNode.InnerText.Trim());
-//}
-
-//// GameLevel
-//XmlNode levelNode = configDoc.DocumentElement.SelectSingleNode("//GameSettings/GameLevel");
-//if (levelNode != null)
-//{
-//    Console.WriteLine("GameLevel: " + levelNode.InnerText.Trim());
-//}
-#endregion
