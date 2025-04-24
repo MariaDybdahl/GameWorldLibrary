@@ -24,7 +24,7 @@ namespace GameWorldLibrary.DesignPattern.Composite
         public void Add(IAttackItem item)
         {
             items.Add(item);
-            _logger.LogInfo($"Attack item added: {item.GetType().Name}");
+            _logger.LogInfo($"Attack item added: {ReflectionHelper.GetDisplayName(item)}");
         }
         /// <summary>
         /// Fjerner et angrebsitem fra listen over items.
@@ -35,7 +35,7 @@ namespace GameWorldLibrary.DesignPattern.Composite
         {
             if (items.Remove(item))
             {
-                _logger.LogInfo($"Attack item {item.GetType().Name} removed successfully.");
+                _logger.LogInfo($"Attack item {ReflectionHelper.GetDisplayName(item)} removed successfully.");
             }
             else
             {

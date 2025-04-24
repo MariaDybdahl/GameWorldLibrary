@@ -58,7 +58,10 @@ lootBox2.DefenseList.Add(Helmet);
 FalseBox.DefenseList.Add(Leggnings);
 #endregion
 
-#region CreatureLooting
+#region Looting
+Console.WriteLine();
+Console.WriteLine("Looting:");
+Console.WriteLine();
 zombie.Loot(FalseBox);
 human.Loot(lootBox2);
 zombie.Loot(lootBox);
@@ -84,6 +87,9 @@ zombie.Loot(lootBox);
 #endregion
 
 #region Fight
+Console.WriteLine();
+Console.WriteLine("Fight:");
+Console.WriteLine();
 int zombieDMG = zombie.Hit();  
 human.ReceiveHit(zombieDMG);
 
@@ -94,6 +100,7 @@ zombie.ReceiveHit(humanDMG);
 #endregion
 
 #region Change Logging format
+Console.WriteLine();
 Console.WriteLine("Change Logging Format");
 Console.WriteLine();
 logger.SetFormatter((msg, level) =>
@@ -101,8 +108,10 @@ logger.SetFormatter((msg, level) =>
 
 #endregion
 
-#region Stategy On Attack
-
+#region Stategy (CriticalStrikeStrategy)
+Console.WriteLine();
+Console.WriteLine("Strategy (CriticalStrikeStrategy):");
+Console.WriteLine();
 ZombieX.AttackList.Add(new AttackItem("Spear", 10, 1));
 ZombieX.AttackStrategy = new CriticalStrikeStrategy(new BasicAttackStrategy());
 int damageCriticalStrikeStrategy = ZombieX.Hit();
@@ -113,7 +122,9 @@ HumanJole.ReceiveHit(damageCriticalStrikeStrategy);
 #region Decorator
 
 #region Boost Attack Decorator
-
+Console.WriteLine();
+Console.WriteLine("Boost Attack Decorator:");
+Console.WriteLine();
 
 Zombie TestBoost = new Zombie("TestBoost", 150);
 Human TestBoostHuman = new Human("HumanTest",13);
@@ -130,6 +141,9 @@ TestBoost.ReceiveHit(TestBoostHumanDMG);
 #endregion
 
 #region Weaken Attack Decorator
+Console.WriteLine();
+Console.WriteLine("Weaken Attack Decorator:");
+Console.WriteLine();
 
 Console.WriteLine();
 Console.WriteLine(Axe.Hit);
@@ -151,18 +165,23 @@ TestBoost.ReceiveHit(NewLooterDMG);
 #endregion
 
 #region Composite
+Console.WriteLine();
+Console.WriteLine("Composite:");
+Console.WriteLine();
+var swordCombo = new AttackItem("Sword", 10, 10);
+var axeCombo = new AttackItem("Axe", 15, 15);
 
-AttackItem sword = new AttackItem("Sword", 10, 10);
-AttackItem axe = new AttackItem("Axe", 15, 15);
+var combo = new AttackItemComposite();
+combo.Add(swordCombo);
+combo.Add(axeCombo);
 
-AttackItemComposite combo = new AttackItemComposite();
-combo.Add(sword);
-combo.Add(new BoostAttackDecorator(axe));
+// Her: combo implementerer IAttackItem
+Human creatureCombo = new Human("TestHuman", 100);
+creatureCombo.AttackList.Add(combo);
 
-combo.PrintItems(); // viser alle items med navne og skade
-int total = combo.Attack(); // udregner samlet skade
-Console.WriteLine($"Total combo damage: {total}");
-
+int creatureComboDamage = creatureCombo.Hit(); // Hit bruger alle AttackList items og kalder Attack()
+Zombie Z = new Zombie("Composite", 100);
+Z.ReceiveHit(creatureComboDamage);
 
 #endregion
 

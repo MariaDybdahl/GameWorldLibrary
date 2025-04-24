@@ -29,7 +29,7 @@ namespace GameWorldLibrary.DesignPattern.Strategy
                 foreach (var item in creature.AttackList)
                 {
                     int damage = item.Attack();
-                    _logger.LogInfo($"Attack from {item.GetType().Name} dealt {damage} damage.");
+                    _logger.LogInfo($"Attack from {ReflectionHelper.GetDisplayName(item)} dealt {damage} damage.");
                     totalHit += damage;
                 }
 

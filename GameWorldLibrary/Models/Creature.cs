@@ -31,9 +31,7 @@ namespace GameWorldLibrary.DesignPattern
             get => _hitPoint;
             set
             {
-
                 if (value == _hitPoint) return;
-
                 _hitPoint = value;
                 Notify("HitPoint");
             }
@@ -135,7 +133,7 @@ namespace GameWorldLibrary.DesignPattern
 
             if (!worldObject.Lootable)
             {
-                logger.LogInfo("You can not loot the object");
+                logger.LogWarning("You can not loot the object");
                 return;
             }
 
@@ -172,7 +170,8 @@ namespace GameWorldLibrary.DesignPattern
             foreach (var item in worldObject.AttackList)
             {
                 AttackList.Add(item);
-                logger.LogInfo($"You looted {item.GetType().Name}");
+              
+                logger.LogInfo($"You looted {ReflectionHelper.GetDisplayName(item)}");
             }
             logger.LogInfo($"Your attack list has {AttackList.Count} items");
         }

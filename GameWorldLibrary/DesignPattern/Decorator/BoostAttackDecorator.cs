@@ -10,8 +10,6 @@ namespace GameWorldLibrary.DesignPattern.Decorator
 {
     public class BoostAttackDecorator : IAttackItem
     {
-
-
         private readonly IAttackItem _attackItem;
         private readonly MyLogger _logger = MyLogger.GetInstance();
         public BoostAttackDecorator(IAttackItem attackItem)
