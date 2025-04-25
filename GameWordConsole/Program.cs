@@ -202,7 +202,7 @@ Z.ReceiveHit(creatureComboDamage);
 //Zombie og Human kan bruges som Creature uden at ændre resten af koden
 
 //I: Klienter skal ikke tvinges til at implementere unødvendige metoder
-//Der er små, fokuserede interfaces:
+//fokuserede interfaces med en ting:
 //IAttackItem kun med Attack()
 //IAttackStrategy kun med CalculateHit()
 
