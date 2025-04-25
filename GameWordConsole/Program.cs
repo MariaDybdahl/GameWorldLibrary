@@ -209,6 +209,5 @@ Z.ReceiveHit(creatureComboDamage);
 //D: Klasser skal afhænge af abstraktioner (interfaces), ikke konkrete klasser
 //Creature afhænger af:public IAttackStrategy AttackStrategy { get; set; }
 //Og AttackList er en liste af IAttackItem, ikke konkrete våben.
-//Du bruger interfaces, ikke afhængighed af konkrete klasser.
 
 #endregion

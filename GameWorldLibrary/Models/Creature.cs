@@ -20,9 +20,17 @@ namespace GameWorldLibrary.DesignPattern
         private int _hitPoint;
 
         #region Properties
+        //L
+        //Subklasser skal kunne erstatte deres baseklasse uden at bryde funktionalitet
+        //BoostAttackDecorator og WeakenAttackDecorator erstatter IAttackItem uden fejl
         public List<IAttackItem> AttackList { get; set; } = new List<IAttackItem>();
         public List<DefenceItem> DefenceList { get; set; } = new List<DefenceItem> { };
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        //Dependency Inversion
+        //Klassen afhænge af abstraktioner(interfaces), ikke konkrete klasser
+        //Creature afhænger af:public IAttackStrategy AttackStrategy { get; set; }
+        //Og AttackList er en liste af IAttackItem, ikke konkrete våben.
         public IAttackStrategy AttackStrategy { get; set; } = new BasicAttackStrategy();
         public int Id { get; private set; }
         private static int nextId = 1;
